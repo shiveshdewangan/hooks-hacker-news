@@ -12,7 +12,7 @@ const App = () => {
 
   useEffect(() => {
     getResults();
-  }, [query]);
+  }, []);
 
   const getResults = async () => {
     const { data: results } = await axios.get(API_URL + `${query}`);
@@ -21,7 +21,7 @@ const App = () => {
 
   const handleChange = event => {
     event.preventDefault();
-    setQuery(event.target.value.trim());
+    setQuery(event.target.value);
   };
 
   return (
@@ -36,9 +36,12 @@ const App = () => {
         type="text"
         value={query}
         onChange={event => {
-          handleChange(event);
+          setQuery(event.target.value);
         }}
       />
+      <button type="button" onClick={getResults}>
+        Search
+      </button>
       <ul>
         {results.map(result => (
           <li key={result.objectID}>
